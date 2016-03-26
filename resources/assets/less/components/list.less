@@ -2,62 +2,48 @@
 .list {
   .rounded(5px);
   overflow: hidden;
-
-  &.list-overflowshow {
-    overflow: visible;
-  }
 }
 .list-header {
   padding: 15px;
   background-color: @white;
-  .border-radius(5px, 0, 0, 5px);
   border-bottom: 1px solid @greyLighter;
 }
 .list ul {
   list-style: none;
 }
-.list {
-  & > ul > li > a {
-    .clearfix;
-    display: block;
-    padding: 15px;
-    line-height: 1.2em;
-    background-color: @white;
+.list a {
+  .clearfix;
+  display: block;
+  padding: 15px;
+  line-height: 1.2em;
+  background-color: @white;
 
-    &:hover, &:focus {
-      background-color: @greyLightest;
+  &:hover, &:focus {
+    background-color: @greyLightest;
 
-      .badge {
-        opacity: 1;
-      }
-    }
     .badge {
-      opacity: 0.75;
-    }
-    p {
-      max-width: 100%;
-      color: @grey;
-      margin-bottom: 0;
-      line-height: 1em;
-      line-height: 30px;
-      vertical-align: middle;
-
-      &.title {
-        color: @muhitBlue;
-        font-weight: 600;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
+      opacity: 1;
     }
   }
-  &.list-small {
-    .list-header {
-      padding: 10px;
+  .badge {
+    opacity: 0.75;
+  }
+  p {
+    color: @grey;
+    margin-bottom: 0;
+    line-height: 1em;
+
+    &.title {
+      color: @muhitBlue;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
-    & > ul > li > a {
-      padding: 10px;
-    }
+  }
+  .tag {
+    font-size: 0.8em;
+    padding: 2px 6px;
   }
 }
 .list li + li {
@@ -65,16 +51,8 @@
 }
 @media screen and (max-width: @screen-xs) {
   .list {
-    & > ul > li > a {
-      padding: 10px;
-    }
-    .badge.badge-image {
-      width: 40px;
-      height: 40px;
-    }
     strong {
       font-size: 0.9em;
-      line-height: 1em;
     }
     p {
       font-size: 0.75em;

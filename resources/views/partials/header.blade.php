@@ -1,6 +1,6 @@
 <header class="u-relative <?php echo (isset($type) && $type === 'show') ? "header-show" : "header-list"; ?>">
 
-    @if(!isset($type) || $type !== 'show')
+    <?php if(!isset($type) || $type !== 'show'): ?>
 
         @if($role =='public')
             @include('partials.intro-message')
@@ -18,7 +18,7 @@
                             <i class="form-state form-state-current ion ion-android-locate ion-1x u-mt5 u-hidden"></i>
                             <i class="form-state form-state-busy ion ion-load-a ion-1x u-ml10 u-mt5 ion-spinning u-hidden" style="margin-right: 7px"></i>
                         </div>
-                        <input id="hood" type="text" class="form-input u-floatleft{{ (isset($hood->name) && strlen($hood->name) > 20) ? ' form-smallfont' : '' }}" style="width: 250px;" placeholder="Mahalleni seç..." value="{{$hood->name or ''}}" />
+                        <input id="hood" type="text" class="form-input u-floatleft" style="width: 250px;" placeholder="Mahalleni seç..." value="{{$hood->name or ''}}" />
                         <input id="location_string" name="location" class="u-hidden" value="" />
 
                         @if(isset($redir) and $redir == 'list')
@@ -78,20 +78,38 @@
                     <a class="form-appendRight"><i class="ion ion-search ion-15x u-pa10"></i></a>
                 </div> -->
 
-                <div class="u-floatright">
-                    @include('partials.add_idea_button', array('hood' => $hood))
-                </div>
-
+                @if($role =='public')
+                <a href="javascript:void(0)" data-dialog="dialog_login" class="btn btn-primary u-floatright"><i class="ion ion-plus u-mr5"></i> FİKİR <span class="extended">EKLE</span></a>
+                @elseif($role =='user')
+                    <a href="/issues/new" class="btn btn-primary u-floatright"><i class="ion ion-plus u-mr5"></i> FİKİR <span class="extended">EKLE</span></a>
+                @endif
             </div>
         </div>
 
-        <div class="row">
+        <div class="row"> <!-- u-pinned-bottom -->
             <div class="col-md-10 col-md-offset-1">
-                @include('partials.issue-list-tabs', array('active_tab' => (isset($_GET['sort'])) ? $_GET['sort'] : 'latest' ))
+                <!-- Sorting tabs for issue list -->
+                <ul class="tabs">
+                    <li>
+                        <a href="/{{Request::path()}}?sort=latest" <?php echo ((isset($active_tab) and $active_tab == 'latest') ? 'class="active"' : ''); ?> >
+                            EN SON
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/{{Request::path()}}?sort=popular" <?php echo ((isset($active_tab) and $active_tab == 'popular') ? 'class="active"' : ''); ?>>
+                            POPÜLER
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/map" <?php echo ((isset($active_tab) and $active_tab == 'map') ? 'class="active"' : ''); ?>>
+                            HARİTA
+                        </a>
+                    </li>
+                </ul>
             </div>
         </div>
 
-    @endif
+    <?php endif; ?>
 
 </header>
 

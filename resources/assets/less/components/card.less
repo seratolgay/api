@@ -1,7 +1,4 @@
 /* --- card --- */
-@cardpadding: 20px;
-@cardpadding-small: 15px;
-
 .card {
   display: block;
   min-height: 100px;
@@ -20,48 +17,39 @@
   }
 
   .card-header {
-    padding: @cardpadding;
+    padding: 20px;
     border-bottom: 1px solid @greyLighter;
     line-height: 30px;
-
-    .btn-facebook,
-    .btn-twitter {
-      padding-left: 10px;
-      padding-right: 10px;
-    }
 
     .title {
       color: @greyLight;
     }
   }
   .card-content {
-    padding: @cardpadding;
+    padding: 20px;
   }
 
   .media {
     position: relative;
+    .rounded(5px);
     overflow: hidden;
 
     .media-image {
-      height: 300px;
-      width: 100%;
-      background-color: @greyLighter;
-      background-size: cover;
-      background-position: center center;
+      // min-height: 100px;
+      // height: 200px;
+      // max-height: 250px;
+      // background-color: @greyLighter;
+
+      img {
+        max-width: 100%;
+      }
     }
     .media-map {
-      height: 300px;
+      height: 200px;
       background-color: @muhitBlue;
 
-      #map-canvas {
-        padding-bottom: 270px;
-      }
-      &.compact {
-        height: 150px;
-
-        #map-canvas {
-          padding-bottom: 120px;
-        }
+      img {
+        max-width: 100%;
       }
     }
   }
@@ -69,7 +57,7 @@
     font-weight: 600;
   }
   .card-footer {
-    padding: @cardpadding;
+    padding: 20px;
     border-top: 1px solid @greyLighter;
     line-height: 30px;
 
@@ -99,26 +87,4 @@
   .transform(translateX(200px));
   // visibility: hidden;
   opacity: 0;
-}
-@media screen and (max-width: @screen-sm) {
-  .card {
-    .card-header,
-    .card-content,
-    .card-footer {
-      padding: @cardpadding-small;
-    }
-    .card-header .btn {
-      padding-left: 9px;
-      padding-right: 9px;
-    }
-    .media {
-      .media-map {
-        height: 150px;
-
-        #map-canvas {
-          padding-bottom: 120px;
-        }
-      }
-    }
-  }
 }

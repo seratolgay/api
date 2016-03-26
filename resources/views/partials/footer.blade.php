@@ -2,12 +2,12 @@
     <div class="row">
         <div class="col-sm-3 u-clearfix u-mb20">
             <a href="#top" id="nav_logo" class="u-floatleft"><img src="/images/logo_grey.png" height="30px" alt="" /></a>
-            <small class="u-floatleft u-ml20" style="margin-top: 3px;">&copy; {{strftime('%Y')}}</small>
+            <small class="u-floatleft u-ml20" style="margin-top: 3px;">&copy; 2015</small>
         </div>
         <div class="col-sm-3">
-            <a href="//hikaye.muhit.co/" class="u-inlineblock u-pa5">
-                <i class="ion ion-chatbubble ion-fw u-aligncenter u-mr5"></i>
-                {{ trans('issues.muhit_story') }}
+            <a href="//hikaye.muhit.co/nasil-calisiyor" class="u-inlineblock u-pa5">
+                <i class="ion ion-help-circled ion-fw u-aligncenter u-mr5"></i>
+                {{ trans('issues.how_does_it_work') }}
             </a>
             <br />
             <a href="//hikaye.muhit.co/kullanim-kosullari" class="u-inlineblock u-pa5">
@@ -32,10 +32,9 @@
                 {{ trans('issues.contact') }}
             </a>
             <br />
-            <a href="{{ getSupportLink() }}" class="u-inlineblock u-pa5" target="_blank">
+            <a href="javascript:void(0)" data-dialog="dialog_report" class="u-inlineblock u-pa5">
                 <i class="ion ion-bug ion-fw u-aligncenter u-mr5"></i>
                 {{ trans('issues.problems_and_recommendations') }}
-                <i class="ion ion-android-open u-ml5 c-light"></i>
             </a>
         </div>
     </div>

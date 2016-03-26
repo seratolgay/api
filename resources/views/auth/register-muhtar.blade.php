@@ -37,7 +37,7 @@
 
                 <div class="form-group form-fullwidth u-mb20">
                     <label>{{ trans('auth.email_address') }}</label>
-                    <input type="email" class="form-input" value="" name="email" placeholder="{{ trans('auth.email_address_placeholder') }}" />
+                    <input type="text" class="form-input" value="" name="email" placeholder="{{ trans('auth.email_address_placeholder') }}" />
                 </div>
 
                 <div class="form-group form-fullwidth u-mb20">
@@ -48,7 +48,7 @@
                 <div class="form-group form-fullwidth u-mt30 u-mb20">
                     <input id="termsagree" type="checkbox" class="form-input u-floatleft u-mr20" value="" name="user.agree" />
                     <label for="termsagree">
-                        {!! trans('auth.agree_with_terms', ['tagstart' => '<a href="http://hikaye.muhit.co/kullanim-kosullari" target="_blank">', 'tagend' => '</a>']) !!}
+                        {!! trans('auth.agree_with_terms', ['tagstart' => '<a href="javascript:void(0)">', 'tagend' => '</a>']) !!}
                     </label>
                 </div>
                 <input type="hidden" name="level" value="4">

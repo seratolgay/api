@@ -12,9 +12,6 @@
   &.hasIconLeft .form-input {
     padding-left: 36px;
   }
-  &.hasIconRight .form-input {
-    padding-right: 36px;
-  }
   &.form-autosuggest {
     color: @white;
 
@@ -57,10 +54,8 @@ label[for] {
   cursor: pointer;
 }
 input[type="text"],
-input[type="email"],
 input[type="password"],
-textarea,
-select {
+textarea {
   display: block;
   height: 40px;
   width: 100%;
@@ -85,24 +80,13 @@ select {
     color: @muhitBlue;
     outline: none;
   }
-  &.form-input-hasError {
-    .box-shadow(0 0 0 2px @red);
-    &:focus {
-      .box-shadow(0 0 0 2px @red);
-    }
-  }
-  &.form-smallfont {
-    font-size: 0.75em;
-  }
 }
-input[disabled] {
+input[disabled="disabled"] {
   color: @greyLight;
 }
 input[type="checkbox"] {
   position: absolute;
-  opacity: 0;
-  pointer-events: none;
-  cursor: pointer;
+  left: -9999px;
 
   & + label:before {
     content: "\f372";
@@ -147,12 +131,6 @@ input[type="radio"] {
   &:focus {
     background: @greyLighter;
     .box-shadow(0 0 0 3px fade(@black, 20%));
-  }
-  &.form-input-hasError {
-    .box-shadow(0 0 0 2px @red);
-    &:focus {
-      .box-shadow(0 0 0 2px @red);
-    }
   }
 }
 textarea {

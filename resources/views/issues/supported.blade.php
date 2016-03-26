@@ -5,16 +5,25 @@
 
     <div class="row u-pb20">
         <div class="col-md-10 col-md-offset-1">
-            <div class="u-floatright">
-                @include('partials.add_idea_button', array('hood' => $hood))
-            </div>
             <h2>{{ trans('issues.ideas_i_supported') }}</h2>
         </div>
     </div>
 
-    <div class="row">
+    <div class="row"> <!-- u-pinned-bottom -->
         <div class="col-md-10 col-md-offset-1">
-            @include('partials.issue-list-tabs')
+            <!-- Sorting tabs for issue list -->
+            <ul class="tabs">
+                <li>
+                     <a href="/issues/supported"  <?php echo (($order == 'latest') ? 'class="active"' : ''); ?>>
+                        EN SON
+                    </a>
+                </li>
+                <li>
+                    <a href="/issues/supported?sort=popular" <?php echo (($order == 'popular') ? 'class="active"' : ''); ?>>
+                        POPÜLER
+                    </a>
+                </li>
+            </ul>
         </div>
     </div>
 
@@ -23,11 +32,8 @@
 <section class="tabsection" id="latest">
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
-            @if (isset($_GET['sort']) && $_GET['sort'] == 'map')
-                @include('partials.issues-map', ['issues' => $issues])
-            @else
-                @include('partials.issues-list', ['issues' => $issues])
-            @endif
+
+            @include('partials.issues', ['issues' => $issues])
         </div>
     </div>
 </section>

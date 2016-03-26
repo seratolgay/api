@@ -1,216 +1,185 @@
 <?php namespace Muhit\Http\Controllers;
 
-use Auth;
-use Authorizer;
-use Illuminate\Support\Str;
+use Muhit\Http\Requests;
 use Muhit\Http\Controllers\Controller;
-use Muhit\Jobs\SignupConfirmation;
-use Muhit\Models\Hood;
-use Muhit\Models\User;
+
 use Request;
+use Muhit\Models\User;
+use Muhit\Models\Hood;
+
+use Authorizer;
+use Auth;
+use Str;
 
 class MembersController extends Controller {
 
-	/**
-	 * get user profile
-	 *
-	 * @return mixed
-	 * @author gcg
-	 */
-	public function getMyProfile() {
-		if ($this->isApi) {
-			$user_id = Authorizer::getResourceOwnerId();
-		} else {
-			$user_id = Auth::user()->id;
-		}
 
-		$user = User::with('hood.district.city', 'issues')->find($user_id);
+    /**
+     * get user profile
+     *
+     * @return mixed
+     * @author gcg
+     */
+    public function getMyProfile()
+    {
+        if ($this->isApi) {
+            $user_id = Authorizer::getResourceOwnerId();
+        }
+        else {
+            $user_id = Auth::user()->id;
+        }
 
-		if ($user === null) {
-			if ($this->isApi) {
-				return response()->api(404, 'User not found', ['id' => $user_id]);
-			}
-			return redirect('/')
-				->with('error', 'Aradığınız kullanıcı bulunamadı.');
-		}
+        $user = User::with('hood.district.city', 'issues')->find($user_id);
 
-		if ($this->isApi) {
-			return response()->api(200, 'User profile information', ['user' => $user->toArray()]);
-		}
+        if ($user === null) {
+            if($this->isApi) {
+                return response()->api(404, 'User not found', ['id' => $user_id]);
+            }
+            return redirect('/')
+                ->with('error', 'Aradığınız kullanıcı bulunamadı.');
+        }
 
-		return response()->app(200, 'members.show', ['user' => $user->toArray()]);
-	}
+        if($this->isApi) {
+            return response()->api(200, 'User profile information', ['user' => $user->toArray()]);
+        }
 
-	/**
-	 * displays a form for user editing profile
-	 *
-	 * @return view
-	 * @author Me
-	 */
-	public function getEditProfile() {
+        return response()->app(200, 'members.profile', ['user' => $user->toArray()]);
+    }
 
-		if (!Auth::check()) {
-			return redirect('/')
-				->with('error', 'Giriş yapıp tekrar deneyebilirsiniz.');
-		}
+    /**
+     * displays a form for user editing profile
+     *
+     * @return view
+     * @author Me
+     */
+    public function getEditProfile()
+    {
 
-		$user = User::with('hood.district.city')->find(Auth::user()->id);
+        if (!Auth::check()) {
+            return redirect('/')
+                ->with('error', 'Giriş yapıp tekrar deneyebilirsiniz.');
+        }
 
-		if ($user === null) {
-			return redirect('/')
-				->with('error', 'Giriş yapıp tekrar deneyebilirsiniz.');
-		}
+        $user = User::with('hood.district.city')->find(Auth::user()->id);
 
-		return response()->app(200, 'members.edit', ['user' => $user]);
-	}
+        if ($user === null) {
+            return redirect('/')
+                ->with('error', 'Giriş yapıp tekrar deneyebilirsiniz.');
+        }
 
-	/**
-	 * get user profile
-	 *
-	 * @return mixed
-	 * @author gcg
-	 */
-	public function getProfile($id = null) {
+        return response()->app(200, 'members.edit', ['user' => $user]);
+    }
 
-		$user = User::find($id);
+    /**
+     * get user profile
+     *
+     * @return mixed
+     * @author gcg
+     */
+    public function getProfile($id = null)
+    {
 
-		if ($user === null) {
-			if ($this->isApi) {
-				return response()->api(404, 'User not found', ['id' => $id]);
-			}
-			return redirect('/')
-				->with('error', 'Aradığınız kullanıcı bulunamadı.');
-		}
+        $user = User::find($id);
 
-		if ($this->isApi) {
-			return response()->api(200, 'User profile information', ['user' => $user->toArray()]);
-		}
+        if ($user === null) {
+            if($this->isApi) {
+                return response()->api(404, 'User not found', ['id' => $id]);
+            }
+            return redirect('/')
+                ->with('error', 'Aradığınız kullanıcı bulunamadı.');
+        }
 
-		return response()->app(200, 'members.show', ['user' => $user->toArray()]);
-	}
+        if($this->isApi) {
+            return response()->api(200, 'User profile information', ['user' => $user->toArray()]);
+        }
 
-	/**
-	 * update a users profile
-	 *
-	 * @return json
-	 * @author gcg
-	 */
-	public function postUpdate() {
-		$data = Request::all();
-		if ($this->isApi) {
-			$user_id = Authorizer::getResourceOwnerId();
-		} else {
-			$user_id = Auth::user()->id;
-		}
+        return response()->app(200, 'members.profile', ['user' => $user->toArray()]);
+    }
 
-		$user = User::find($user_id);
+    /**
+     * update a users profile
+     *
+     * @return json
+     * @author gcg
+     */
+    public function postUpdate()
+    {
+        $data = Request::all();
+        if ($this->isApi) {
+            $user_id = Authorizer::getResourceOwnerId();
+        }
+        else {
+            $user_id = Auth::user()->id;
+        }
 
-		if (empty($user)) {
-			if ($this->isApi) {
-				return response()->api(401, 'User issue', []);
-			}
-			return redirect('/')
-				->with('error', 'Kullanıcı bulanamdı.');
-		}
+        $user = User::find($user_id);
 
-		if (isset($data['email']) and filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
-			$user->email = $data['email'];
-			$user->is_verified = 0;
-		}
+        if (empty($user)) {
+            if ($this->isApi) {
+                return response()->api(401, 'User issue', []);
+            }
+            return redirect('/')
+                ->with('error', 'Kullanıcı bulanamdı.');
+        }
 
-		#lets figure out the location.
-		$location_parts = explode(",", $data['location']);
-		$hood = false;
-		if (count($location_parts) === 3) {
-			$hood = Hood::fromLocation($data['location']);
-		}
+        if (isset($data['email']) and filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+            $user->email = $data['email'];
+            $user->is_verified = 0;
+        }
 
-		if (isset($hood) and isset($hood->id)) {
-			$user->hood_id = $hood->id;
-		}
 
-		if (isset($data['username']) and !empty($data['username'])) {
-			$data['username'] = Str::slug($data['username']);
-			$check_slug = (int) DB::table('users')
-				->where('username', $data['username'])
-				->where('id', '<>', $user_id)
-				->count();
-			if ($check_slug === 0) {
-				$user->username = $data['username'];
-			}
-		}
+        #lets figure out the location.
+        $location_parts = explode(",", $data['location']);
+        $hood = false;
+        if (count($location_parts) === 3) {
+            $hood = Hood::fromLocation($data['location']);
+        }
 
-		if (isset($data['first_name']) and !empty($data['first_name'])) {
-			$user->first_name = $data['first_name'];
-		}
-		if (isset($data['last_name']) and !empty($data['last_name'])) {
-			$user->last_name = $data['last_name'];
-		}
-		if (isset($data['location']) and !empty($data['location'])) {
-			$user->location = $data['location'];
+        if (isset($hood) and isset($hood->id)) {
+            $user->hood_id = $hood->id;
+        }
 
-		}
+        if (isset($data['username']) and !empty($data['username'])) {
+            $data['username'] = Str::slug($data['username']);
+            $check_slug = (int) DB::table('users')
+                ->where('username', $data['username'])
+                ->where('id', '<>', $user_id)
+                ->count();
+            if ($check_slug === 0) {
+                $user->username = $data['username'];
+            }
+        }
 
-		if (!empty($data['image']) and is_array($data['image'])) {
-			try {
-				$name = str_replace('.', '', microtime(true));
-				Storage::put('users/' . $name, base64_decode($data['image']));
-				$user->picture = $name;
-			} catch (Exception $e) {
-				Log::error('MembersController/postUpdate/SavingTheImage', (array) $e);
-			}
-		}
+        if (isset($data['first_name']) and !empty($data['first_name'])) {
+            $user->first_name = $data['first_name'];
+        }
+        if (isset($data['last_name']) and !empty($data['last_name'])) {
+            $user->last_name = $data['last_name'];
+        }
+        if (isset($data['location']) and !empty($data['location'])) {
+            $user->location = $data['location'];
 
-		try {
-			$user->save();
-		} catch (Exception $e) {
-			Log::error('MembersController/postUpdate', (array) $e);
-			if ($this->isApi) {
-				return response()->api(500, 'Tech problem', []);
-			}
-			return redirect('/members/edit-profile')
-				->with('error', 'Profilinizi güncellerken bir hata meydana geldi.');
-		}
+        }
 
-		if ($this->isApi) {
 
-		}
+        try {
+            $user->save();
+        } catch (Exception $e) {
+            Log::error('MembersController/postUpdate', (array) $e);
+            if ($this->isApi) {
+                return response()->api(500, 'Tech problem', []);
+            }
+            return redirect('/members/edit-profile')
+                ->with('error', 'Profilinizi güncellerken bir hata meydana geldi.');
+        }
 
-		return redirect('/members/my-profile')
-			->with('success', 'Profiliniz güncellendi.');
+        if ($this->isApi) {
 
-	}
+        }
 
-	/**
-	 * resends the user the confirmation email
-	 *
-	 * @return redirect
-	 * @author Me
-	 */
-	public function getResendConfirmation() {
-		if ($this->isApi) {
-			$user_id = Authorizer::getResourceOwnerId();
-		} else {
-			$user_id = Auth::user()->id;
-		}
+        return redirect('/members/my-profile')
+            ->with('success', 'Profiliniz güncellendi.');
 
-		$user = User::find($user_id);
+    }
 
-		if (empty($user)) {
-			return redirect('/')
-				->with('error', 'Teknik bir hatadan dolayı işleminize devam edemiyorum Lütfen tekrar deneyin.');
-		}
-
-		try {
-			$this->dispatch(new SignupConfirmation($user->id));
-		} catch (Exception $e) {
-			Log::error('MembersController/getResendConfirmation', (array) $e);
-
-			return redirect('/')
-				->with('error', 'Teknik bir hatadan dolayı işleminize devam edemiyorum Lütfen tekrar deneyin.');
-		}
-
-		return redirect('/')
-			->with('success', 'Onaylama epostası gönderildi.');
-	}
 }
