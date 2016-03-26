@@ -7,19 +7,28 @@
   .rounded(5px);
   overflow: hidden;
 
+  img {
+    max-width: 100%;
+  }
+  &.badge-circle-small {
+    width: 20px;
+    height: 20px;
+    .rounded(50%);
+  }
   &.badge-circle {
     width: 40px;
     height: 40px;
-    .rounded(20px);
-
-    img {
-      max-width: 100%;
-    }
+    .rounded(50%);
   }
   &.badge-circle-large {
+    width: 60px;
+    height: 60px;
+    .rounded(50%);
+  }
+  &.badge-circle-xlarge {
     width: 80px;
     height: 80px;
-    .rounded(40px);
+    .rounded(50%);
   }
   &.badge-user {
     img {
@@ -51,7 +60,7 @@
     &.badge-new {
       background-color: @muhitBlue;
     }
-    &.badge-progress {
+    &.badge-in-progress {
       background-color: @purple;
     }
     &.badge-solved {
@@ -112,44 +121,6 @@
 
 
 
-// tag
-.tag {
-  position: relative;
-  display: inline-block;
-  background-color: @greyLighter;
-  color: @white;
-  padding: 3px 10px;
-  .rounded(5px);
-  font-size: 0.9em;
-  font-weight: bold;
-
-  .tag-close {
-    display: inline-block;
-    float: right;
-    height: 32px;
-    margin-top: -3px;
-    margin-bottom: -3px;
-    padding-top: 8px;
-    border-left: 1px solid fade(@black, 20%);
-    line-height: 15px;
-    color: fade(@white, 75%);
-
-    &:hover, &:focus {
-      color: @white;
-    }
-  }
-}
-.tag-collapsed {
-  width: 15px;
-  height: 15px;
-  .rounded(50%);
-  .transform(translateY(2px));
-  margin-right: 5px;
-  padding: 0;
-}
-
-
-
 // label
 .label {
   display: inline-block;
@@ -159,7 +130,6 @@
   font-size: 1.1em;
   line-height: 20px;
   font-weight: bold;
-  cursor: pointer;
   color: @white;
 
   &.label-new-empty {
@@ -170,7 +140,7 @@
   &.label-new {
     background-color: darken(@muhitBlue, 15%);
   }
-  &.label-progress {
+  &.label-in-progress {
     background-color: darken(@purple, 15%);
   }
   &.label-solved {

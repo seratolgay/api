@@ -72,13 +72,48 @@
   .padding(@steps, @max, (@i + 1));
 }
 
+// pixel-based widths
+.u-width40 {
+  max-width: 40px !important;
+  width: 40px !important;
+}
 .u-width50 {
   max-width: 50px !important;
   width: 50px !important;
 }
+.u-width100 {
+  max-width: 100px !important;
+  width: 100px !important;
+}
+.u-width150 {
+  max-width: 150px !important;
+  width: 150px !important;
+}
 .u-width300 {
   max-width: 300px !important;
   width: 300px !important;
+}
+.u-width600 {
+  max-width: 600px !important;
+  width: 600px !important;
+}
+.u-fullWidth {
+  width: 100%;
+}
+
+// build percentage-based widths (steps, maximum)
+.widths(5, 200);
+
+.widths(@steps, @max, @i: 0) when (@i =< (@max/@steps)) {
+  // define padding number to use as classname
+  @width: (@i * @steps);
+  // output classes
+  .u-width@{width}p {
+    max-width: ~"@{width}%" !important;
+    width: ~"@{width}%" !important;
+  }
+  // initiate next iteration
+  .widths(@steps, @max, (@i + 1));
 }
 
 .u-relative {
@@ -138,9 +173,6 @@
   left: 0;
   width: 100%;
   max-width: 100vw;
-}
-.u-fullWidth {
-  width: 100%;
 }
 .u-nowrap {
   max-width: 100%;
