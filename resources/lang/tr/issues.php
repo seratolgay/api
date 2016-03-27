@@ -89,9 +89,9 @@ return [
     "about_muhit" => "Muhit hakkında",
     "contact" => "İletişim",
     "our_manifesto" => "Manifestomuz",
-    "my_muhtar_info" => "Muhtarım bilgisi", // @seratolgay
-    "your_muhtar_didnt_sign_up_yet" => "Muhtarınız henüz Muhit'e üye değil!", // @seratolgay
-    "no_announcements" => "Duyuru yok...", // @seratolgay
+    "my_muhtar_info" => "Muhtarımın bilgileri",
+    "your_muhtar_didnt_sign_up_yet" => "Muhtarınız henüz Muhit'e üye değil!",
+    "no_announcements" => "Henüz bir duyuru yok",
     "submitted_anonymously" => "Bu fikir anonim olarak eklenmiştir.",
     "added_ideas" => "Eklediği fikirleri",
 ];
